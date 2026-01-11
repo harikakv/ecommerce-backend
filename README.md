@@ -1,9 +1,9 @@
-E-Commerce Web Application
+**E-Commerce Web Application**
 
 This is a simple E-Commerce web application built using Django REST Framework and React.
 The project focuses on backend APIs, token-based authentication, and frontend–backend integration.
 
-Features
+**Features**
 
 User registration and login
 
@@ -17,9 +17,9 @@ View and manage cart
 
 Place order from cart
 
-Tech Stack
+**Tech Stack**
 
-Backend
+**Backend**
 
 Python
 
@@ -29,7 +29,7 @@ Django REST Framework
 
 JWT Authentication
 
-Frontend
+**Frontend**
 
 React
 
@@ -37,7 +37,7 @@ Axios
 
 HTML, CSS, JavaScript
 
-How it works (short)
+**How it works**
 
 User logs in and gets a JWT token
 
@@ -47,22 +47,22 @@ Frontend communicates with backend using REST APIs
 
 Cart and order logic handled in backend
 
-Project Status
+**Project Status**
 
 Core functionality is implemented.
 Some UI improvements and edge-case handling are in progress.
 
-How to run
+**How to run**
 
-Backend
+**Backend**
 
 python manage.py runserver
 
 
-Frontend
+**Frontend**
 
 npm start
 
-Author
+**Author**
 
 Harika
