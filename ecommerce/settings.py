@@ -1,6 +1,6 @@
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,12 +9,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+mot8nb5s-$h77h#1tw-w+%pg==i9h7r$qkrc0h&=xf0^*skm-'
+#SECRET_KEY = 'django-insecure-+mot8nb5s-$h77h#1tw-w+%pg==i9h7r$qkrc0h&=xf0^*skm-'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1"
+).split(",")
 
-ALLOWED_HOSTS = []
+
+# For CORS: allow frontend URL only
+CORS_ALLOWED_ORIGINS = [
+    "https://your-frontend.vercel.app",  # replace with your Vercel frontend URL
+]
 
 
 # Application definition
@@ -130,4 +138,4 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+
