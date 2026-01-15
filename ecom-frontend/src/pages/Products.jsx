@@ -7,10 +7,21 @@ function Products() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("products/")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
+
+  api.get("products/")
+    .then((res) => {
+      console.log("PRODUCTS RESPONSE:", res.data);
+      setProducts(res.data);
+    })
+    .catch((err) => {
+      console.error(
+        "PRODUCTS ERROR:",
+        err.response ? err.response.data : err
+      );
+    });
+}, []);
+
 
   const addToCart = async (id) => {
     const token = localStorage.getItem("token");
@@ -43,5 +54,6 @@ function Products() {
     </div>
   );
 }
+
 
 export default Products;
