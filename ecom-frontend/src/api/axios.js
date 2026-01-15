@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_BASE_URL.replace(/\/+$/, ""); // remove trailing slash
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // no extra trailing slash
+  baseURL,
 });
 
 api.interceptors.request.use((config) => {
@@ -13,4 +15,3 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
-
