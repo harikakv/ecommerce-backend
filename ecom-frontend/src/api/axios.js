@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL.replace(/\/+$/, ""); // remove trailing slash
+const baseURL = import.meta.env.VITE_API_BASE_URL.replace(/\/+$/, "");
 
-const api = axios.create({
-  baseURL,
-});
+const api = axios.create({ baseURL });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
