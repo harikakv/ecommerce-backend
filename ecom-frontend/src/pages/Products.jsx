@@ -7,25 +7,24 @@ function Products() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
+    // SANITY CHECK: confirm backend URL
+    console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
 
-  api.get("products/")
-    .then((res) => {
-      console.log("PRODUCTS RESPONSE:", res.data);
-      setProducts(res.data);
-    })
-    .catch((err) => {
-      console.error(
-        "PRODUCTS ERROR:",
-        err.response ? err.response.data : err
-      );
-    });
-}, []);
-
+    api.get("products/") // relative path, baseURL from env
+      .then((res) => {
+        console.log("PRODUCTS RESPONSE:", res.data);
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.error(
+          "PRODUCTS ERROR:",
+          err.response ? err.response.data : err
+        );
+      });
+  }, []);
 
   const addToCart = async (id) => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       const go = window.confirm("Please login to add to cart");
       if (go) navigate("/login");
@@ -36,7 +35,7 @@ function Products() {
       await api.post("cart/add/", { product_id: id });
       alert("Added to cart");
     } catch (err) {
-      console.log(err);
+      console.error("CART ERROR:", err.response ? err.response.data : err);
       alert("Error adding to cart");
     }
   };
@@ -54,6 +53,5 @@ function Products() {
     </div>
   );
 }
-
 
 export default Products;

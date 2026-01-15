@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL, // no extra trailing slash
 });
 
 api.interceptors.request.use((config) => {
@@ -13,3 +13,4 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+
