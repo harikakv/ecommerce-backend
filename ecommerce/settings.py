@@ -1,33 +1,28 @@
-
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# -----------------------------
+# BASE DIR
+# -----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-+mot8nb5s-$h77h#1tw-w+%pg==i9h7r$qkrc0h&=xf0^*skm-'
-
+# -----------------------------
+# SECURITY
+# -----------------------------
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
+
 DEBUG = os.environ.get("DEBUG", "False") == "True"
+
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
+    "localhost,127.0.0.1,.onrender.com"
 ).split(",")
 
 
-# For CORS: allow frontend URL only
-CORS_ALLOWED_ORIGINS = [
-    "https://your-frontend.vercel.app",  # replace with your Vercel frontend URL
-]
-
-
-# Application definition
-
+# -----------------------------
+# INSTALLED APPS
+# -----------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,20 +30,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-   # Third-party
-   'rest_framework',
-   'rest_framework.authtoken', 
-   'corsheaders',
-   # Local apps
-    'users.apps.UsersConfig',
+
+    # Third-party
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+
+    # Local apps
+    'users',
     'products',
     'cart',
     'orders',
 ]
 
+
+# -----------------------------
+# MIDDLEWARE
+# -----------------------------
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',   # MUST BE FIRST
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,8 +58,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# -----------------------------
+# CORS CONFIG (IMPORTANT)
+# -----------------------------
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+
+# -----------------------------
+# URL CONFIG
+# -----------------------------
 ROOT_URLCONF = 'ecommerce.urls'
 
+
+# -----------------------------
+# TEMPLATES
+# -----------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -75,12 +90,16 @@ TEMPLATES = [
     },
 ]
 
+
+# -----------------------------
+# WSGI
+# -----------------------------
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# -----------------------------
+# DATABASE
+# -----------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,47 +108,41 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
+# -----------------------------
+# PASSWORD VALIDATION
+# -----------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
+# -----------------------------
+# INTERNATIONALIZATION
+# -----------------------------
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
+# -----------------------------
+# STATIC FILES
+# -----------------------------
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# -----------------------------
+# DEFAULT AUTO FIELD
+# -----------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# -----------------------------
+# DJANGO REST FRAMEWORK
+# -----------------------------
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -140,9 +153,9 @@ REST_FRAMEWORK = {
 }
 
 
+# -----------------------------
+# CSRF (OPTIONAL BUT SAFE)
+# -----------------------------
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
-    "https://ecom-frontend-kothapally-vallepu-harikas-projects.vercel.app",
 ]
-
-CORS_ALLOW_CREDENTIALS = True
