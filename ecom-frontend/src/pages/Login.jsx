@@ -11,9 +11,9 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await api.post("token/", { username, password });
+      const res = await api.post("/api/token/", { username, password });
       login(res.data.token);
-      navigate("/"); // 👈 BACK TO PRODUCTS
+      navigate("/");
     } catch {
       alert("Invalid credentials");
     }
@@ -23,8 +23,15 @@ function Login() {
     <div className="login-box">
       <h2>Login</h2>
 
-      <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        placeholder="Username"
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
       <button onClick={handleLogin}>Login</button>
     </div>
