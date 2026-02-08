@@ -34,8 +34,9 @@ function Login() {
       />
 
       <button onClick={handleLogin}>Login</button>
+      <p>username- harikakv & password - dimple@123</p>
     </div>
-  );
+    ); 
 }
 
 export default Login;

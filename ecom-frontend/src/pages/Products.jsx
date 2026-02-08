@@ -10,7 +10,7 @@ function Products() {
     // SANITY CHECK: confirm backend URL
     console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
 
-    api.get("/api/products")
+    api.get("products")
 // relative path, baseURL from env
       .then((res) => {
         console.log("PRODUCTS RESPONSE:", res.data);
