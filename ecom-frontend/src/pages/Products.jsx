@@ -10,7 +10,7 @@ function Products() {
     // SANITY CHECK: confirm backend URL
     console.log("BASE URL:", import.meta.env.VITE_API_BASE_URL);
 
-    api.get("products")
+    api.get("/api/products")
 // relative path, baseURL from env
       .then((res) => {
         console.log("PRODUCTS RESPONSE:", res.data);
@@ -33,7 +33,7 @@ function Products() {
     }
 
     try {
-      await api.post("cart/add/", { product_id: id });
+      await api.post("/api/cart/add/", { product_id: id });
       alert("Added to cart");
     } catch (err) {
       console.error("CART ERROR:", err.response ? err.response.data : err);

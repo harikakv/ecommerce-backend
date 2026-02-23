@@ -13,7 +13,7 @@ function Cart() {
       return;
     }
 
-    api.get("cart/")
+    api.get("api/cart/")
       .then((res) => {
         setItems(res.data.items); // backend format
       })
@@ -28,7 +28,7 @@ function Cart() {
 
   const placeOrder = async () => {
     try {
-      await api.post("orders/place/");
+      await api.post("api/orders/place/");
       alert("Order placed successfully");
       navigate("/orders");
     } catch (err) {

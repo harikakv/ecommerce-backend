@@ -17,11 +17,12 @@ function Orders() {
     }
 
     setLoading(true);
+
+    // ⚠️ IMPORTANT: do NOT add /api here if already in baseURL
     api
-      .get("orders/", {
-        headers: { Authorization: `Token ${token}` },
-      })
+      .get("/api/orders/")
       .then((res) => {
+        console.log("ORDERS DATA:", res.data);
         setOrders(res.data);
         setLoading(false);
       })
@@ -32,15 +33,24 @@ function Orders() {
       });
   }, [navigate]);
 
-  // Calculate total for an order
+  // ✅ Calculate total safely
   const getOrderTotal = (order) => {
     if (order.total) return parseFloat(order.total).toFixed(2);
     if (order.total_cost) return parseFloat(order.total_cost).toFixed(2);
     if (order.total_price) return parseFloat(order.total_price).toFixed(2);
 
     const items = order.items || order.order_items || [];
+
     return items
-      .reduce((sum, i) => sum + i.quantity * parseFloat(i.product_price || 0), 0)
+      .reduce((sum, i) => {
+        const price = parseFloat(
+          i.product_price ||
+          i.price ||
+          i.product?.price ||
+          0
+        );
+        return sum + i.quantity * price;
+      }, 0)
       .toFixed(2);
   };
 
@@ -73,7 +83,7 @@ function Orders() {
               background: "#fafafa",
             }}
           >
-            {/* ORDER HEADER */}
+            {/* HEADER */}
             <div
               style={{
                 display: "flex",
@@ -86,7 +96,7 @@ function Orders() {
               <span>Total: ₹{getOrderTotal(order)}</span>
             </div>
 
-            {/* META INFO */}
+            {/* META */}
             <div
               style={{
                 display: "flex",
@@ -96,28 +106,41 @@ function Orders() {
                 marginBottom: "12px",
               }}
             >
-              <span>Date: {formatDate(order.created_at || order.order_date)}</span>
+              <span>
+                Date: {formatDate(order.created_at || order.order_date)}
+              </span>
               <span>Status: {order.status || "Placed"}</span>
             </div>
 
             <hr />
 
-            {/* ORDERED PRODUCTS */}
+            {/* ITEMS */}
             {items.map((item, idx) => {
-              const price = parseFloat(item.product_price || 0);
+              const price = parseFloat(
+                item.product_price ||
+                item.price ||
+                item.product?.price ||
+                0
+              );
+
+              const name =
+                item.product_name ||
+                item.name ||
+                item.product?.name ||
+                "Product";
+
               const lineTotal = (price * item.quantity).toFixed(2);
 
               return (
                 <div
                   key={idx}
-                  className="cart-item"
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     padding: "6px 0",
                   }}
                 >
-                  <span>{item.product_name}</span>
+                  <span>{name}</span>
                   <span>
                     ₹{price} × {item.quantity} = ₹{lineTotal}
                   </span>
